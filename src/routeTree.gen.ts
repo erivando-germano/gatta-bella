@@ -10,15 +10,24 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as CarrinhoRouteImport } from './routes/carrinho'
 import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as FinalizarRouteImport } from './routes/finalizar'
+import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CarrinhoRoute = CarrinhoRouteImport.update({
@@ -36,6 +45,21 @@ const FinalizarRoute = FinalizarRouteImport.update({
   path: '/finalizar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RedefinirSenhaRoute = RedefinirSenhaRouteImport.update({
+  id: '/redefinir-senha',
+  path: '/redefinir-senha',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoriaSlugRoute = CategoriaSlugRouteImport.update({
   id: '/categoria/$slug',
   path: '/categoria/$slug',
@@ -49,61 +73,86 @@ const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/carrinho': typeof CarrinhoRoute
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/carrinho': typeof CarrinhoRoute
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
+  '/admin': typeof AdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/admin': typeof AdminRouteWithChildren
   '/carrinho': typeof CarrinhoRoute
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
+  '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin_/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
+  '/admin/': typeof AdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/admin'
     | '/carrinho'
     | '/categorias'
     | '/finalizar'
+    | '/redefinir-senha'
+    | '/admin/login'
     | '/categoria/$slug'
     | '/produto/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/carrinho'
     | '/categorias'
     | '/finalizar'
+    | '/redefinir-senha'
+    | '/admin/login'
     | '/categoria/$slug'
     | '/produto/$slug'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/admin'
     | '/carrinho'
     | '/categorias'
     | '/finalizar'
+    | '/redefinir-senha'
+    | '/admin_/login'
     | '/categoria/$slug'
     | '/produto/$slug'
+    | '/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
   CarrinhoRoute: typeof CarrinhoRoute
   CategoriasRoute: typeof CategoriasRoute
   FinalizarRoute: typeof FinalizarRoute
+  RedefinirSenhaRoute: typeof RedefinirSenhaRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   CategoriaSlugRoute: typeof CategoriaSlugRoute
   ProdutoSlugRoute: typeof ProdutoSlugRoute
 }
@@ -115,6 +164,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/carrinho': {
@@ -138,6 +194,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FinalizarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/redefinir-senha': {
+      id: '/redefinir-senha'
+      path: '/redefinir-senha'
+      fullPath: '/redefinir-senha'
+      preLoaderRoute: typeof RedefinirSenhaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/categoria/$slug': {
       id: '/categoria/$slug'
       path: '/categoria/$slug'
@@ -155,11 +232,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminIndexRoute: typeof AdminIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminIndexRoute: AdminIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
   CarrinhoRoute: CarrinhoRoute,
   CategoriasRoute: CategoriasRoute,
   FinalizarRoute: FinalizarRoute,
+  RedefinirSenhaRoute: RedefinirSenhaRoute,
+  AdminLoginRoute: AdminLoginRoute,
   CategoriaSlugRoute: CategoriaSlugRoute,
   ProdutoSlugRoute: ProdutoSlugRoute,
 }
