@@ -5,7 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { useCart } from "@/lib/cart";
-import { categoriesQuery, currentPrice, formatBRL, optionsOf, productsQuery } from "@/lib/catalog";
+import { categoriesQuery, currentPrice, formatBRL, optionsOf, productsQuery, type Product } from "@/lib/catalog";
 
 export const Route = createFileRoute("/produto/$slug")({
   head: () => ({
@@ -60,7 +60,7 @@ function ProductDetail({
   categoryName,
   categorySlug,
 }: {
-  product: NonNullable<ReturnType<typeof Array.prototype.find>> & import("@/lib/catalog").Product;
+  product: Product;
   categoryName?: string;
   categorySlug?: string;
 }) {
