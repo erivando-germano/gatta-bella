@@ -1,11 +1,12 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { ImageOff, Minus, Plus } from "lucide-react";
+import { ImageOff } from "lucide-react";
+import { QtyStepper } from "@/components/site/QtyStepper";
 import { useState } from "react";
 import { toast } from "sonner";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { useCart } from "@/lib/cart";
-import { categoriesQuery, currentPrice, formatBRL, optionsOf, productsQuery } from "@/lib/catalog";
+import { categoriesQuery, currentPrice, formatBRL, optionsOf, productsQuery, type Product } from "@/lib/catalog";
 
 export const Route = createFileRoute("/produto/$slug")({
   head: () => ({
@@ -60,7 +61,7 @@ function ProductDetail({
   categoryName,
   categorySlug,
 }: {
-  product: NonNullable<ReturnType<typeof Array.prototype.find>> & import("@/lib/catalog").Product;
+  product: Product;
   categoryName?: string;
   categorySlug?: string;
 }) {
@@ -224,25 +225,3 @@ function OptionPicker({
   );
 }
 
-export function QtyStepper({ value, onChange }: { value: number; onChange: (n: number) => void }) {
-  return (
-    <div className="inline-flex h-11 items-center rounded-full border border-border">
-      <button type="button" aria-label="Diminuir quantidade" onClick={() => onChange(Math.max(1, value - 1))} className="grid h-11 w-11 place-items-center">
-        <Minus className="h-4 w-4" />
-      </button>
-      <input
-        aria-label="Quantidade"
-        inputMode="numeric"
-        value={value}
-        onChange={(e) => {
-          const n = parseInt(e.target.value.replace(/\D/g, ""), 10);
-          onChange(Number.isFinite(n) ? Math.min(99, Math.max(1, n)) : 1);
-        }}
-        className="w-10 bg-transparent text-center text-sm outline-none"
-      />
-      <button type="button" aria-label="Aumentar quantidade" onClick={() => onChange(Math.min(99, value + 1))} className="grid h-11 w-11 place-items-center">
-        <Plus className="h-4 w-4" />
-      </button>
-    </div>
-  );
-}
