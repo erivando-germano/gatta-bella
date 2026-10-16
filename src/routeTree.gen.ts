@@ -16,9 +16,12 @@ import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as FinalizarRouteImport } from './routes/finalizar'
 import { Route as RedefinirSenhaRouteImport } from './routes/redefinir-senha'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminCategoriasRouteImport } from './routes/admin.categorias'
+import { Route as AdminConfiguracoesRouteImport } from './routes/admin.configuracoes'
 import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as CategoriaSlugRouteImport } from './routes/categoria.$slug'
 import { Route as ProdutoSlugRouteImport } from './routes/produto.$slug'
+import { Route as AdminProdutosIdRouteImport } from './routes/admin.produtos.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -55,6 +58,16 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCategoriasRoute = AdminCategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminConfiguracoesRoute = AdminConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/admin_/login',
   path: '/admin/login',
@@ -70,6 +83,11 @@ const ProdutoSlugRoute = ProdutoSlugRouteImport.update({
   path: '/produto/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminProdutosIdRoute = AdminProdutosIdRouteImport.update({
+  id: '/produtos/$id',
+  path: '/produtos/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -78,10 +96,13 @@ export interface FileRoutesByFullPath {
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin/categorias': typeof AdminCategoriasRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/$id': typeof AdminProdutosIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -89,10 +110,13 @@ export interface FileRoutesByTo {
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin/categorias': typeof AdminCategoriasRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/admin/produtos/$id': typeof AdminProdutosIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -102,10 +126,13 @@ export interface FileRoutesById {
   '/categorias': typeof CategoriasRoute
   '/finalizar': typeof FinalizarRoute
   '/redefinir-senha': typeof RedefinirSenhaRoute
+  '/admin/categorias': typeof AdminCategoriasRoute
+  '/admin/configuracoes': typeof AdminConfiguracoesRoute
   '/admin_/login': typeof AdminLoginRoute
   '/categoria/$slug': typeof CategoriaSlugRoute
   '/produto/$slug': typeof ProdutoSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/admin/produtos/$id': typeof AdminProdutosIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -116,10 +143,13 @@ export interface FileRouteTypes {
     | '/categorias'
     | '/finalizar'
     | '/redefinir-senha'
+    | '/admin/categorias'
+    | '/admin/configuracoes'
     | '/admin/login'
     | '/categoria/$slug'
     | '/produto/$slug'
     | '/admin/'
+    | '/admin/produtos/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -127,10 +157,13 @@ export interface FileRouteTypes {
     | '/categorias'
     | '/finalizar'
     | '/redefinir-senha'
+    | '/admin/categorias'
+    | '/admin/configuracoes'
     | '/admin/login'
     | '/categoria/$slug'
     | '/produto/$slug'
     | '/admin'
+    | '/admin/produtos/$id'
   id:
     | '__root__'
     | '/'
@@ -139,10 +172,13 @@ export interface FileRouteTypes {
     | '/categorias'
     | '/finalizar'
     | '/redefinir-senha'
+    | '/admin/categorias'
+    | '/admin/configuracoes'
     | '/admin_/login'
     | '/categoria/$slug'
     | '/produto/$slug'
     | '/admin/'
+    | '/admin/produtos/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -208,6 +244,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/categorias': {
+      id: '/admin/categorias'
+      path: '/categorias'
+      fullPath: '/admin/categorias'
+      preLoaderRoute: typeof AdminCategoriasRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/configuracoes': {
+      id: '/admin/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/admin/configuracoes'
+      preLoaderRoute: typeof AdminConfiguracoesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin_/login': {
       id: '/admin_/login'
       path: '/admin/login'
@@ -229,15 +279,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutoSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/produtos/$id': {
+      id: '/admin/produtos/$id'
+      path: '/produtos/$id'
+      fullPath: '/admin/produtos/$id'
+      preLoaderRoute: typeof AdminProdutosIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
 
 interface AdminRouteChildren {
+  AdminCategoriasRoute: typeof AdminCategoriasRoute
+  AdminConfiguracoesRoute: typeof AdminConfiguracoesRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminProdutosIdRoute: typeof AdminProdutosIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminCategoriasRoute: AdminCategoriasRoute,
+  AdminConfiguracoesRoute: AdminConfiguracoesRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminProdutosIdRoute: AdminProdutosIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
