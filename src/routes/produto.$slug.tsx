@@ -62,8 +62,8 @@ function ProductDetail({
   categorySlug,
 }: {
   product: Product;
-  categoryName?: string;
-  categorySlug?: string;
+  categoryName?: string | undefined;
+  categorySlug?: string | undefined;
 }) {
   const cart = useCart();
   const navigate = useNavigate();
@@ -71,9 +71,9 @@ function ProductDetail({
   const sizes = optionsOf(product, "size");
   const shades = optionsOf(product, "shade");
   const [imgIdx, setImgIdx] = useState(0);
-  const [color, setColor] = useState<string | null>(colors.length === 1 ? colors[0] : null);
-  const [size, setSize] = useState<string | null>(sizes.length === 1 ? sizes[0] : null);
-  const [shade, setShade] = useState<string | null>(shades.length === 1 ? shades[0] : null);
+  const [color, setColor] = useState<string | null>(colors.length === 1 ? colors[0]! : null);
+  const [size, setSize] = useState<string | null>(sizes.length === 1 ? sizes[0]! : null);
+  const [shade, setShade] = useState<string | null>(shades.length === 1 ? shades[0]! : null);
   const [qty, setQty] = useState(1);
   const [error, setError] = useState<string | null>(null);
 
@@ -82,9 +82,9 @@ function ProductDetail({
 
   const add = (goToCart: boolean) => {
     if (!product.available) return;
-    if (colors.length && !color) return setError("Escolha uma cor.");
-    if (sizes.length && !size) return setError("Escolha um tamanho.");
-    if (shades.length && !shade) return setError("Escolha uma tonalidade.");
+    if (colors.length && !color) { setError("Escolha uma cor."); return; }
+    if (sizes.length && !size) { setError("Escolha um tamanho."); return; }
+    if (shades.length && !shade) { setError("Escolha uma tonalidade."); return; }
     setError(null);
     cart.add({
       productId: product.id,

@@ -38,7 +38,7 @@ function Home() {
           height={1008}
           className="h-[68vh] min-h-[420px] w-full object-cover object-[70%_center]"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/75 to-background/10 md:via-background/50 md:to-transparent" />
         <div className="container-page absolute inset-0 flex flex-col justify-center">
           <p className="eyebrow">Nova coleção</p>
           <h1 className="mt-3 max-w-md text-5xl leading-[1.05] md:text-7xl">

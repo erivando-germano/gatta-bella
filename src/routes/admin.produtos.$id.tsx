@@ -21,7 +21,7 @@ function EditPage() {
 
 type Img = { id?: string; url: string; storage_path: string | null };
 
-function ProductForm({ product }: { product?: Product }) {
+function ProductForm({ product }: { product?: Product | undefined }) {
   const qc = useQueryClient();
   const navigate = useNavigate();
   const { data: categories } = useQuery(categoriesQuery);
@@ -72,10 +72,10 @@ function ProductForm({ product }: { product?: Product }) {
     setError(null);
     const price = parseMoney(f.price);
     const promo = f.promo_price.trim() ? parseMoney(f.promo_price) : null;
-    if (f.name.trim().length < 2) return setError("Informe o nome do produto.");
-    if (!f.category_id) return setError("Escolha a categoria.");
-    if (!(price > 0)) return setError("Informe um preço válido.");
-    if (promo != null && !(promo > 0 && promo < price)) return setError("O preço promocional deve ser menor que o preço de venda.");
+    if (f.name.trim().length < 2) { setError("Informe o nome do produto."); return; }
+    if (!f.category_id) { setError("Escolha a categoria."); return; }
+    if (!(price > 0)) { setError("Informe um preço válido."); return; }
+    if (promo != null && !(promo > 0 && promo < price)) { setError("O preço promocional deve ser menor que o preço de venda."); return; }
 
     setSaving(true);
     try {
@@ -165,7 +165,7 @@ function ProductForm({ product }: { product?: Product }) {
               {i === 0 && <span className="absolute bottom-1 left-1 rounded bg-background px-1 text-[0.6rem]">Capa</span>}
               <div className="absolute right-1 top-1 flex gap-1">
                 {i > 0 && (
-                  <button type="button" aria-label="Mover para frente" onClick={() => setImages((p) => { const c = [...p]; [c[i - 1], c[i]] = [c[i], c[i - 1]]; return c; })} className="grid h-7 w-7 place-items-center rounded-full bg-background">
+                  <button type="button" aria-label="Mover para frente" onClick={() => setImages((p) => { const c = [...p]; [c[i - 1], c[i]] = [c[i]!, c[i - 1]!]; return c; })} className="grid h-7 w-7 place-items-center rounded-full bg-background">
                     <ArrowUp className="h-3 w-3 -rotate-90" />
                   </button>
                 )}

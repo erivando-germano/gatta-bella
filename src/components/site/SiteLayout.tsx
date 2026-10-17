@@ -11,7 +11,7 @@ const NAV = [
   { to: "/categoria/$slug", params: { slug: "maquiagens" }, label: "Maquiagens" },
 ] as const;
 
-export function Logo({ name, logoUrl }: { name: string; logoUrl?: string | null }) {
+export function Logo({ name, logoUrl }: { name: string; logoUrl?: string | null | undefined }) {
   if (logoUrl) return <img src={logoUrl} alt={name} className="h-10 w-auto object-contain" />;
   return (
     <span className="font-display text-2xl leading-none tracking-wide md:text-3xl">

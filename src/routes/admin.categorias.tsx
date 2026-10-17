@@ -22,9 +22,9 @@ function CategoriesAdmin() {
 
   const create = async () => {
     const n = name.trim();
-    if (n.length < 2) return toast.error("Informe o nome da categoria.");
+    if (n.length < 2) { toast.error("Informe o nome da categoria."); return; }
     const { error } = await supabase.from("categories").insert({ name: n, slug: slugify(n), sort_order: (categories?.length ?? 0) + 1 });
-    if (error) return toast.error("Não foi possível criar: " + (error.code === "23505" ? "já existe uma categoria com esse nome." : errMsg(error)));
+    if (error) { toast.error("Não foi possível criar: " + (error.code === "23505" ? "já existe uma categoria com esse nome." : errMsg(error))); return; }
     setName("");
     toast.success("Categoria criada");
     refresh();
@@ -32,7 +32,7 @@ function CategoriesAdmin() {
 
   const update = async (c: Category, patch: Partial<Category>) => {
     const { error } = await supabase.from("categories").update(patch).eq("id", c.id);
-    if (error) return toast.error("Não foi possível salvar: " + errMsg(error));
+    if (error) { toast.error("Não foi possível salvar: " + errMsg(error)); return; }
     toast.success("Categoria salva");
     refresh();
   };
@@ -40,7 +40,7 @@ function CategoriesAdmin() {
   const del = async () => {
     if (!toDelete) return;
     const { error } = await supabase.from("categories").delete().eq("id", toDelete.id);
-    if (error) return toast.error("Não foi possível excluir: " + errMsg(error));
+    if (error) { toast.error("Não foi possível excluir: " + errMsg(error)); return; }
     toast.success("Categoria excluída");
     setToDelete(null);
     refresh();
