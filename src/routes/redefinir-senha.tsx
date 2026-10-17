@@ -29,8 +29,8 @@ function Reset() {
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
-    if (pw.length < 8) return setError("A senha precisa ter pelo menos 8 caracteres.");
-    if (pw !== pw2) return setError("As senhas não coincidem.");
+    if (pw.length < 8) { setError("A senha precisa ter pelo menos 8 caracteres."); return; }
+    if (pw !== pw2) { setError("As senhas não coincidem."); return; }
     setBusy(true);
     const { error } = await supabase.auth.updateUser({ password: pw });
     setBusy(false);

@@ -116,13 +116,13 @@ function Checkout() {
         <form onSubmit={submit} noValidate className="max-w-xl space-y-5">
           <h1 className="text-4xl md:text-5xl">Finalizar pedido</h1>
           <p className="text-muted-foreground">Preencha seus dados. Vamos abrir o WhatsApp com a mensagem pronta para você revisar e enviar.</p>
-          <Field label="Seu nome *" error={errors.name}>
+          <Field label="Seu nome *" error={errors["name"]}>
             <input autoComplete="name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inputCls} />
           </Field>
-          <Field label="Telefone para contato (com DDD) *" error={errors.phone}>
+          <Field label="Telefone para contato (com DDD) *" error={errors["phone"]}>
             <input type="tel" autoComplete="tel" inputMode="tel" placeholder="(11) 90000-0000" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className={inputCls} />
           </Field>
-          <Field label="Observações (opcional)" error={errors.notes}>
+          <Field label="Observações (opcional)" error={errors["notes"]}>
             <textarea rows={3} value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className={`${inputCls} h-auto py-3`} />
           </Field>
           {fail && <p role="alert" className="text-sm text-destructive">{fail}</p>}
@@ -171,7 +171,7 @@ function Checkout() {
 
 const inputCls = "h-12 w-full rounded-md border border-input bg-card px-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring";
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({ label, error, children }: { label: string; error?: string | undefined; children: React.ReactNode }) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-sm font-medium">{label}</span>

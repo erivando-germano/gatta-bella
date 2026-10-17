@@ -6,7 +6,7 @@ import { categoriesQuery, productsQuery } from "@/lib/catalog";
 
 const norm = (s: string) => s.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 
-export function CatalogView({ categorySlug, initialQuery }: { categorySlug?: string; initialQuery?: string }) {
+export function CatalogView({ categorySlug, initialQuery }: { categorySlug?: string | undefined; initialQuery?: string }) {
   const { data: products, isLoading, isError } = useQuery(productsQuery);
   const { data: categories } = useQuery(categoriesQuery);
   const [q, setQ] = useState(initialQuery ?? "");

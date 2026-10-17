@@ -52,10 +52,10 @@ function SettingsForm({ s }: { s: StoreSettings }) {
   const prepare = () => {
     setError(null);
     const wa = normalizeWhatsapp(f.whatsapp_number);
-    if (!wa) return setError("WhatsApp inválido. Use código do país + DDD + número, ex.: 55 11 94936-9601.");
-    if (f.store_name.trim().length < 2) return setError("Informe o nome da loja.");
+    if (!wa) { setError("WhatsApp inválido. Use código do país + DDD + número, ex.: 55 11 94936-9601."); return; }
+    if (f.store_name.trim().length < 2) { setError("Informe o nome da loja."); return; }
     const ig = f.instagram_handle.trim().replace(/^@/, "").replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/.*$/, "");
-    if (!/^[a-zA-Z0-9._]{1,30}$/.test(ig)) return setError("Instagram inválido.");
+    if (!/^[a-zA-Z0-9._]{1,30}$/.test(ig)) { setError("Instagram inválido."); return; }
     setConfirm({
       store_name: f.store_name.trim(),
       instagram_handle: ig,
@@ -73,7 +73,7 @@ function SettingsForm({ s }: { s: StoreSettings }) {
     const { data, error } = await supabase.from("store_settings").update(confirm).eq("id", 1).select().single();
     setBusy(false);
     setConfirm(null);
-    if (error || !data) return toast.error("Não foi possível salvar: " + errMsg(error));
+    if (error || !data) { toast.error("Não foi possível salvar: " + errMsg(error)); return; }
     setF((p) => ({ ...p, whatsapp_number: data.whatsapp_number, instagram_handle: data.instagram_handle }));
     qc.setQueryData(settingsQuery.queryKey, data);
     toast.success("Configurações salvas");

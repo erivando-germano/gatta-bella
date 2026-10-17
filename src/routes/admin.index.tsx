@@ -36,7 +36,7 @@ function ProductsAdmin() {
 
   const toggle = async (p: Product) => {
     const { error } = await supabase.from("products").update({ available: !p.available }).eq("id", p.id);
-    if (error) return toast.error("Não foi possível alterar: " + errMsg(error));
+    if (error) { toast.error("Não foi possível alterar: " + errMsg(error)); return; }
     toast.success(!p.available ? "Marcado como disponível" : "Marcado como indisponível");
     qc.invalidateQueries({ queryKey: ["products"] });
   };
@@ -44,7 +44,7 @@ function ProductsAdmin() {
   const doDelete = async () => {
     if (!toDelete) return;
     const { error } = await supabase.from("products").delete().eq("id", toDelete.id);
-    if (error) return toast.error("Não foi possível excluir: " + errMsg(error));
+    if (error) { toast.error("Não foi possível excluir: " + errMsg(error)); return; }
     await Promise.all(toDelete.product_images.map((i) => removeStored("product-images", i.storage_path)));
     toast.success("Produto excluído");
     setToDelete(null);
